@@ -418,8 +418,6 @@ function upgrade_program(){
 			echo -e "${error_font}设置Rinetd权限失败！"
 			exit 1
 		fi
-		clear
-		echo "${ok_font}Rinetd升级成功。"
 	elif [[ ${install_type} = "2" ]]; then
 		wget "https://github.com/linhua55/lkl_study/releases/download/${rinetd_ver}/rinetd_bbr" -O "/usr/local/rinetd/rinetd"
 		if [[ $? -eq 0 ]];then
@@ -448,8 +446,6 @@ function upgrade_program(){
 			echo -e "${error_font}设置Rinetd权限失败！"
 			exit 1
 		fi
-		clear
-		echo "${ok_font}Rinetd升级成功。"
 	elif [[ ${install_type} = "3" ]]; then
 		wget "https://github.com/linhua55/lkl_study/releases/download/${rinetd_ver}/rinetd_bbr_powered" -O "/usr/local/rinetd/rinetd"
 		if [[ $? -eq 0 ]];then
@@ -478,9 +474,11 @@ function upgrade_program(){
 			echo -e "${error_font}设置Rinetd权限失败！"
 			exit 1
 		fi
-		clear
-		echo "${ok_font}Rinetd升级成功。"
 	fi
+	clear
+	restart_service
+	clear
+	echo "${ok_font}Rinetd升级成功。"
 }
 
 function clear_install(){
@@ -608,16 +606,6 @@ function set_rinetd_system_config(){
 		clear_install
 		exit 1
 	fi
-	systemctl start rinetd.service
-	if [[ $? -eq 0 ]];then
-		clear
-		echo -e "${ok_font}启动Rinetd成功。"
-	else
-		clear
-		echo -e "${error_font}启动Rinetd失败！"
-		clear_install
-		exit 1
-	fi
 }
 
 
@@ -658,6 +646,8 @@ function add_speededup_port(){
 		echo -e "${error_font}Rinetd端口配置失败！"
 		exit 1
 	fi
+	clear
+	restart_service
 }
 
 function del_speededup_port(){
@@ -695,6 +685,8 @@ function del_speededup_port(){
 		echo -e "${error_font}Rinetd端口配置失败！"
 		exit 1
 	fi
+	clear
+	restart_service
 }
 
 
