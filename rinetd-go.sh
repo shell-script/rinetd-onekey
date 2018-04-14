@@ -55,7 +55,7 @@ function check_install_status(){
 	fi
 	rinetd_pid=$(ps -ef |grep "rinetd" |grep -v "grep" | grep -v ".sh"| grep -v "init.d" |grep -v "service" |awk '{print $2}')
 	if [[ ${rinetd_pid} = "" ]]; then
-		rinetd_config=$(cat /usr/local/config.json)
+		rinetd_config=$(cat /usr/local/rinetd/config.json)
 		if [[ ${rinetd_config} = "" ]]; then
 			rinetd_status="${red_fontcolor}未安装${default_fontcolor}"
 		else
@@ -552,7 +552,7 @@ function set_speededup_port(){
 		clear_install
 		exit 1
 	fi
-	echo -e "0.0.0.0 ${speededup_local_port} 0.0.0.0 ${speededup_connectport_port}" > /usr/local/config.json
+	echo -e "0.0.0.0 ${speededup_local_port} 0.0.0.0 ${speededup_connectport_port}" > /usr/local/rinetd/config.json
 	if [[ $? -eq 0 ]];then
 		clear
 		echo -e "${ok_font}Rinetd端口配置成功。"
@@ -649,7 +649,7 @@ function add_speededup_port(){
 		echo -e "$(error_font)请输入正确的端口！"
 		exit 1
 	fi
-	echo -e "0.0.0.0 ${speededup_local_port} 0.0.0.0 ${speededup_connectport_port}" >> /usr/local/config.json
+	echo -e "0.0.0.0 ${speededup_local_port} 0.0.0.0 ${speededup_connectport_port}" >> /usr/local/rinetd/config.json
 	if [[ $? -eq 0 ]];then
 		clear
 		echo -e "${ok_font}Rinetd端口配置成功。"
@@ -677,7 +677,7 @@ function del_speededup_port(){
 			exit 1
 		fi
 	fi
-	sed -i '/0.0.0.0 ${del_speededup_local_port}/d' /usr/local/config.json
+	sed -i '/0.0.0.0 ${del_speededup_local_port}/d' /usr/local/rinetd/config.json
 	if [[ $? -eq 0 ]];then
 		clear
 		echo -e "${ok_font}Rinetd端口配置成功。"
@@ -686,7 +686,7 @@ function del_speededup_port(){
 		echo -e "${error_font}Rinetd端口配置失败！"
 		exit 1
 	fi
-	sed -i /^[[:space:]]*$/d /usr/local/config.json
+	sed -i /^[[:space:]]*$/d /usr/local/rinetd/config.json
 	if [[ $? -eq 0 ]];then
 		clear
 		echo -e "${ok_font}Rinetd端口配置成功。"
