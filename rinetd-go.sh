@@ -672,7 +672,7 @@ function del_speededup_port(){
 			exit 1
 		fi
 	fi
-	sed -i '/0.0.0.0 ${del_speededup_local_port}/d' /usr/local/rinetd/config.json
+	sed -i "/0.0.0.0 ${del_speededup_local_port}/d" /usr/local/rinetd/config.json
 	if [[ $? -eq 0 ]];then
 		clear
 		echo -e "${ok_font}Rinetd端口配置成功。"
