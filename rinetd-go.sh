@@ -414,6 +414,15 @@ function upgrade_program(){
 			fi
 			exit 1
 		fi
+		rm -rf /usr/local/rinetd/rinetd.bak
+		if [[ $? -eq 0 ]];then
+			clear
+			echo -e "${ok_font}删除备份文件成功。"
+		else
+			clear
+			echo -e "${error_font}删除备份文件失败！"
+			exit 1
+		fi
 		chmod 700 /usr/local/rinetd/rinetd
 		if [[ $? -eq 0 ]];then
 			clear
@@ -442,6 +451,15 @@ function upgrade_program(){
 			fi
 			exit 1
 		fi
+		rm -rf /usr/local/rinetd/rinetd.bak
+		if [[ $? -eq 0 ]];then
+			clear
+			echo -e "${ok_font}删除备份文件成功。"
+		else
+			clear
+			echo -e "${error_font}删除备份文件失败！"
+			exit 1
+		fi
 		chmod 700 /usr/local/rinetd/rinetd
 		if [[ $? -eq 0 ]];then
 			clear
@@ -468,6 +486,15 @@ function upgrade_program(){
 				echo -e "${error_font}恢复旧Rinetd文件失败！"
 				exit 1
 			fi
+			exit 1
+		fi
+		rm -rf /usr/local/rinetd/rinetd.bak
+		if [[ $? -eq 0 ]];then
+			clear
+			echo -e "${ok_font}删除备份文件成功。"
+		else
+			clear
+			echo -e "${error_font}删除备份文件失败！"
 			exit 1
 		fi
 		chmod 700 /usr/local/rinetd/rinetd
