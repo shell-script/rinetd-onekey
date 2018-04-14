@@ -166,7 +166,7 @@ function data_processing(){
 				echo -e "${error_font}下载Rinetd文件失败！"
 				exit
 			fi
-			chmod -x /usr/local/rinetd/rinetd
+			chmod 700 /usr/local/rinetd/rinetd
 			if [[ $? -eq 0 ]];then
 				clear
 				echo -e "${ok_font}设置Rinetd权限成功。"
@@ -199,7 +199,7 @@ function data_processing(){
 				echo -e "${error_font}下载Rinetd文件失败！"
 				exit
 			fi
-			chmod -x /usr/local/rinetd/rinetd
+			chmod 700 /usr/local/rinetd/rinetd
 			if [[ $? -eq 0 ]];then
 				clear
 				echo -e "${ok_font}设置Rinetd权限成功。"
@@ -232,7 +232,7 @@ function data_processing(){
 				echo -e "${error_font}下载Rinetd文件失败！"
 				exit
 			fi
-			chmod -x /usr/local/rinetd/rinetd
+			chmod 700 /usr/local/rinetd/rinetd
 			if [[ $? -eq 0 ]];then
 				clear
 				echo -e "${ok_font}设置Rinetd权限成功。"
@@ -414,7 +414,7 @@ function upgrade_program(){
 			fi
 			exit 1
 		fi
-		chmod -x /usr/local/rinetd/rinetd
+		chmod 700 /usr/local/rinetd/rinetd
 		if [[ $? -eq 0 ]];then
 			clear
 			echo -e "${ok_font}设置Rinetd权限成功。"
@@ -442,7 +442,7 @@ function upgrade_program(){
 			fi
 			exit 1
 		fi
-		chmod -x /usr/local/rinetd/rinetd
+		chmod 700 /usr/local/rinetd/rinetd
 		if [[ $? -eq 0 ]];then
 			clear
 			echo -e "${ok_font}设置Rinetd权限成功。"
@@ -470,7 +470,7 @@ function upgrade_program(){
 			fi
 			exit 1
 		fi
-		chmod -x /usr/local/rinetd/rinetd
+		chmod 700 /usr/local/rinetd/rinetd
 		if [[ $? -eq 0 ]];then
 			clear
 			echo -e "${ok_font}设置Rinetd权限成功。"
@@ -592,7 +592,7 @@ function set_rinetd_system_config(){
 		clear_install
 		exit 1
 	fi
-	chmod -x /etc/systemd/system/rinetd.service
+	chmod 700 /etc/systemd/system/rinetd.service
 	if [[ $? -eq 0 ]];then
 		clear
 		echo -e "${ok_font}设置Rinetd服务文件权限成功。"
