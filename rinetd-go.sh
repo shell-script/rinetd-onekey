@@ -357,6 +357,7 @@ function prevent_install_check(){
 function uninstall_program(){
 	clear
 	echo -e "正在卸载中..."
+	service rinetd stop
 	systemctl disable rinetd.service
 	update-rc.d -f rinetd remove
 	rm -rf /etc/systemd/system/rinetd.service
@@ -485,6 +486,7 @@ function upgrade_program(){
 function clear_install(){
 	clear
 	echo -e "正在卸载中..."
+	service rinetd stop
 	systemctl disable rinetd.service
 	update-rc.d -f rinetd remove
 	rm -rf /etc/systemd/system/rinetd.service
