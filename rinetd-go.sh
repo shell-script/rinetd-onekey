@@ -483,7 +483,7 @@ function upgrade_program(){
 	clear
 	restart_service
 	clear
-	echo "${ok_font}Rinetd升级成功。"
+	echo -e "${ok_font}Rinetd升级成功。"
 }
 
 function clear_install(){
