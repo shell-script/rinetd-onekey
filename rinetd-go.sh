@@ -37,12 +37,17 @@ function check_os(){
 	elif [ ! -z "$(cat /etc/issue | grep Ubuntu)" ];then
 		clear
 		echo -e "${ok_font}该脚本支持您的系统。"
-	elif [[ $(uname -m) = "x86_64" ]];then
-		echo -e "${ok_font}该脚本支持您的系统版本。"
 	else
 		clear
 		echo -e "${error_font}目前暂不支持您使用的操作系统，请切换至Debian/Ubuntu。"
 		exit 1
+	fi
+	if [[ $(uname -m) = "x86_64" ]];then
+		clear
+		echo -e "${ok_font}该脚本支持您的系统版本。"
+	else
+		clear
+		echo -e "${error_font}目前暂不支持您使用的操作系统，请切换至Debian/Ubuntu x86_64。"
 	fi
 }
 
