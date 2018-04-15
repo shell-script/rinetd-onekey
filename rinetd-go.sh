@@ -48,6 +48,20 @@ function check_os(){
 	else
 		clear
 		echo -e "${error_font}目前暂不支持您使用的操作系统，请切换至Debian/Ubuntu x86_64。"
+		exit 1
+	fi
+	if [[ $(virt-what) = "kvm" ]]; then
+		os_virt="kvm"
+		clear
+		echo -e "${ok_font}该脚本支持您的虚拟化模式。"
+	elif [[ $(virt-what) = "openvz" ]]; then
+		os_virt="openvz"
+		clear
+		echo -e "${ok_font}该脚本支持您的虚拟化模式。"
+	else
+		clear
+		echo -e "${error_font}目前暂不支持您使用的虚拟化模式，请切换至KVM或者OPENVZ。"
+		exit 1
 	fi
 }
 
@@ -537,7 +551,7 @@ function os_update(){
 	clear
 	apt-get -y update
 	apt-get -y upgrade
-	apt-get -y install wget curl lsof cron iptables gcc
+	apt-get -y install wget curl lsof cron iptables gcc virt-what
 	if [[ $? -ne 0 ]];then
 		clear
 		echo -e "${error_font}系统组件更新失败！"
@@ -599,25 +613,48 @@ function set_rinetd_system_config(){
 	clear
 	echo -e "正在配置Rinetd中..."
 	clear
-	cat <<-EOF > /etc/systemd/system/rinetd.service
-		[Unit]
-		Description=rinetd
+	if [[ ${os_virt} = "openvz" ]]; then
+		cat <<-EOF > /etc/systemd/system/rinetd.service
+			[Unit]
+			Description=rinetd
 
-		[Service]
-		ExecStart=/usr/local/rinetd/rinetd -f -c /usr/local/rinetd/config.json raw venet0:0
-		Restart=always
+			[Service]
+			ExecStart=/usr/local/rinetd/rinetd -f -c /usr/local/rinetd/config.json raw venet0:0
+			Restart=always
 
-		[Install]
-		WantedBy=multi-user.target
-	EOF
-	if [[ $? -eq 0 ]];then
-		clear
-		echo -e "${ok_font}配置Rinetd成功。"
-	else
-		clear
-		echo -e "${error_font}配置Rinetd失败！"
-		clear_install
-		exit 1
+			[Install]
+			WantedBy=multi-user.target
+		EOF
+		if [[ $? -eq 0 ]];then
+			clear
+			echo -e "${ok_font}配置Rinetd成功。"
+		else
+			clear
+			echo -e "${error_font}配置Rinetd失败！"
+			clear_install
+			exit 1
+		fi
+	elif [[ ${os_virt} = "kvm" ]]; then
+		cat <<-EOF > /etc/systemd/system/rinetd.service
+			[Unit]
+			Description=rinetd
+
+			[Service]
+			ExecStart=/usr/local/rinetd/rinetd -f -c /usr/local/rinetd/config.json raw eth0
+			Restart=always
+
+			[Install]
+			WantedBy=multi-user.target
+		EOF
+		if [[ $? -eq 0 ]];then
+			clear
+			echo -e "${ok_font}配置Rinetd成功。"
+		else
+			clear
+			echo -e "${error_font}配置Rinetd失败！"
+			clear_install
+			exit 1
+		fi
 	fi
 	chmod 700 /etc/systemd/system/rinetd.service
 	if [[ $? -eq 0 ]];then
