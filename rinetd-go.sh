@@ -596,7 +596,7 @@ function set_speededup_port(){
 		clear_install
 		exit 1
 	fi
-	echo -e "0.0.0.0 ${speededup_local_port} 0.0.0.0 ${speededup_connect_port}" > /usr/local/rinetd/config.json
+	echo -e "0.0.0.0 ${speededup_connect_port} 0.0.0.0 ${speededup_local_port}" > /usr/local/rinetd/config.json
 	if [[ $? -eq 0 ]];then
 		clear
 		echo -e "${ok_font}Rinetd端口配置成功。"
@@ -706,7 +706,7 @@ function add_speededup_port(){
 		echo -e "$(error_font)请输入正确的端口！"
 		exit 1
 	fi
-	echo -e "0.0.0.0 ${speededup_local_port} 0.0.0.0 ${speededup_connect_port}" >> /usr/local/rinetd/config.json
+	echo -e "0.0.0.0 ${speededup_connect_port} 0.0.0.0 ${speededup_local_port}" >> /usr/local/rinetd/config.json
 	if [[ $? -eq 0 ]];then
 		clear
 		echo -e "${ok_font}Rinetd端口配置成功。"
@@ -723,20 +723,20 @@ function del_speededup_port(){
 	clear
 	echo -e "正在配置Rinetd加速端口中..."
 	clear
-	stty erase '^H' && read -p "请输入欲取消加速的本地端口/远程端口：" del_speededup_local_port
-	if [[ ${del_speededup_local_port} = "" ]]; then
+	stty erase '^H' && read -p "请输入欲取消加速的本地端口/远程端口：" del_speededup_port
+	if [[ ${del_speededup_port} = "" ]]; then
 		echo -e "{error_font}请输入欲取消加速的本地端口/远程端口！"
 		exit 1
 	else
-		if [[ ${del_speededup_local_port} -lt 1 ]]; then
+		if [[ ${del_speededup_port} -lt 1 ]]; then
 			echo -e "$(error_font)请输入正确的端口！"
 			exit 1
-		elif [[ ${del_speededup_local_port} -gt 65535 ]]; then
+		elif [[ ${del_speededup_port} -gt 65535 ]]; then
 			echo -e "$(error_font)请输入正确的端口！"
 			exit 1
 		fi
 	fi
-	sed -i "/0.0.0.0 ${del_speededup_local_port}/d" /usr/local/rinetd/config.json
+	sed -i "/0.0.0.0 ${del_speededup_port}/d" /usr/local/rinetd/config.json
 	if [[ $? -eq 0 ]];then
 		clear
 		echo -e "${ok_font}Rinetd端口配置成功。"
