@@ -647,7 +647,7 @@ function add_speededup_port(){
 	clear
 	stty erase '^H' && read -p "请输入欲加速的本地端口：" speededup_local_port
 	if [[ ${speededup_local_port} = "" ]]; then
-		echo -e "{error_font}请输入端口！"
+		echo -e "${error_font}请输入端口！"
 		exit 1
 	else
 		if [[ ${speededup_local_port} -lt 1 ]]; then
