@@ -20,6 +20,9 @@ ok_font="${green_fontcolor}[OK]${default_fontcolor}"
 
 function check_os(){
 	clear
+	echo -e "正在检查组件中..."
+	check_necessary_tool
+	clear
 	echo -e "正在检测当前是否为ROOT用户..."
 	if [[ $EUID -ne 0 ]]; then
 		clear
@@ -62,6 +65,35 @@ function check_os(){
 		clear
 		echo -e "${error_font}目前暂不支持您使用的虚拟化模式，请切换至KVM或者OPENVZ。"
 		exit 1
+	fi
+}
+
+function check_necessary_tool(){
+	clear
+	echo -e "正在准备需要的组件..."
+	virt-what
+	if [[ $? -eq 0 ]];then
+		echo -e "${ok_font}检测到virt-what已安装。"
+	else
+		echo -e "正在安装virt-what中..."
+		apt-get update -y
+		if [[ $? -eq 0 ]];then
+			clear
+			echo -e "${ok_font}更新apt包信息成功。"
+		else
+			clear
+			echo -e "${error_font}更新apt包信息失败！"
+			exit 1
+		fi
+		apt-get install -y virt-what
+		if [[ $? -eq 0 ]];then
+			clear
+			echo -e "${ok_font}安装virt-what成功。"
+		else
+			clear
+			echo -e "${error_font}安装virt-what失败！"
+			exit 1
+		fi
 	fi
 }
 
